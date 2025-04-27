@@ -13,7 +13,7 @@ Một website bán sách hiện đại, tải siêu nhanh được xây dựng b
 
 ## 🛠️ Công nghệ sử dụng
 
-- **Frontend**: React 18, TypeScript, Vite
+- **Frontend**: React, TypeScript, Vite
 - **Backend**: NodeJS
 - **Giao diện**: Tailwind CSS
 
