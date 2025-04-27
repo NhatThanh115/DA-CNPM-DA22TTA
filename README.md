@@ -1,4 +1,4 @@
-# 📚 Ứng dụng Web Bán Sách
+# 📚 Web Bán Sách
 
 Một website bán sách hiện đại, tải siêu nhanh được xây dựng bằng **React**, **TypeScript** và **Vite**.
 
@@ -15,11 +15,7 @@ Một website bán sách hiện đại, tải siêu nhanh được xây dựng b
 
 - **Frontend**: React 18, TypeScript, Vite
 - **Backend**: NodeJS
-- **Quản lý trạng thái**: Redux Toolkit (hoặc Context API - tùy chọn)
-- **Routing**: React Router
-- **Giao diện**: Tailwind CSS (hoặc framework CSS khác)
-- **Xử lý Form**: React Hook Form + Yup
-- **Xác thực**: Dựa trên JWT (dự kiến)
+- **Giao diện**: Tailwind CSS
 
 ## 📦 Cài đặt
 
