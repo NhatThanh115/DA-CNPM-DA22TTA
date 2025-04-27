@@ -37,8 +37,12 @@ npm run dev
 ## 🧹 Các lệnh tiện ích
 
 Lệnh | Chức năng
+
 npm run dev | Khởi chạy server phát triển
+
 npm run build | Build dự án cho production
+
 npm run preview | Xem trước bản build
+
 npm run lint | Kiểm tra lỗi code (lint)
 
