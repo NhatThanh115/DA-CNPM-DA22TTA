@@ -1,29 +1,55 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingCartIcon, MagnifyingGlassIcon, Bars3Icon, XMarkIcon, GlobeAltIcon } from '@heroicons/react/24/outline';
+import {
+  ShoppingCartIcon,
+  MagnifyingGlassIcon,
+  Bars3Icon,
+  XMarkIcon,
+  GlobeAltIcon,
+  UserIcon,
+  HeartIcon,
+  ArrowRightOnRectangleIcon
+} from '@heroicons/react/24/outline';
+import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { useCart } from '../../contexts/CartContext';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { useAuth } from '../../contexts/AuthContext';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+
   const { cartItems } = useCart();
   const { language, setLanguage, t } = useLanguage();
+  const { currentUser, logout } = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
     if (isLanguageMenuOpen) setIsLanguageMenuOpen(false);
+    if (isUserMenuOpen) setIsUserMenuOpen(false);
   };
 
   const toggleLanguageMenu = () => {
     setIsLanguageMenuOpen(!isLanguageMenuOpen);
+    if (isUserMenuOpen) setIsUserMenuOpen(false);
+  };
+
+  const toggleUserMenu = () => {
+    setIsUserMenuOpen(!isUserMenuOpen);
+    if (isLanguageMenuOpen) setIsLanguageMenuOpen(false);
   };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     // Implement search functionality
     console.log('Searching for:', searchQuery);
+  };
+
+  const handleLogout = async () => {
+    await logout();
+    setIsUserMenuOpen(false);
   };
 
   const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
@@ -48,7 +74,7 @@ export default function Header() {
             <Link to="/about" className="text-gray-600 hover:text-blue-600">{t('about')}</Link>
           </nav>
 
-          {/* Search, Cart, Language, and Mobile Menu Toggle */}
+          {/* Search, Cart, Language, User, and Mobile Menu Toggle */}
           <div className="flex items-center space-x-4">
             <form onSubmit={handleSearch} className="hidden md:flex items-center border rounded-full px-3 py-1 bg-gray-50">
               <input
@@ -92,6 +118,70 @@ export default function Header() {
               )}
             </div>
 
+            {/* User Account */}
+            {currentUser ? (
+              <div className="relative">
+                <button
+                  className="flex items-center text-gray-700 hover:text-blue-600"
+                  onClick={toggleUserMenu}
+                >
+                  <span className="hidden md:block mr-2 text-sm font-medium">
+                    {currentUser.name.split(' ')[0]}
+                  </span>
+                  <UserIcon className="h-6 w-6" />
+                  <ChevronDownIcon className="h-4 w-4 ml-1" />
+                </button>
+
+                {isUserMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md overflow-hidden z-10">
+                    <div className="px-4 py-2 border-b border-gray-100">
+                      <p className="font-medium">{currentUser.name}</p>
+                      <p className="text-sm text-gray-500">{currentUser.email}</p>
+                    </div>
+                    <Link
+                      to="/profile"
+                      className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      onClick={() => setIsUserMenuOpen(false)}
+                    >
+                      <UserIcon className="h-5 w-5 mr-2" />
+                      {t('myProfile')}
+                    </Link>
+                    <Link
+                      to="/profile"
+                      className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      onClick={() => setIsUserMenuOpen(false)}
+                    >
+                      <HeartIcon className="h-5 w-5 mr-2" />
+                      {t('myFavorites')}
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="flex items-center w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100"
+                    >
+                      <ArrowRightOnRectangleIcon className="h-5 w-5 mr-2" />
+                      {t('logout')}
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="hidden md:flex items-center space-x-2">
+                <Link
+                  to="/login"
+                  className="text-gray-700 hover:text-blue-600 px-2 py-1"
+                >
+                  {t('login')}
+                </Link>
+                <span className="text-gray-400">|</span>
+                <Link
+                  to="/register"
+                  className="text-gray-700 hover:text-blue-600 px-2 py-1"
+                >
+                  {t('register')}
+                </Link>
+              </div>
+            )}
+
             <Link to="/cart" className="relative p-2">
               <ShoppingCartIcon className="h-6 w-6 text-gray-700" />
               {totalItems > 0 && (
@@ -132,6 +222,32 @@ export default function Header() {
               <Link to="/books" className="text-gray-600 hover:text-blue-600 py-2" onClick={toggleMenu}>{t('books')}</Link>
               <Link to="/categories" className="text-gray-600 hover:text-blue-600 py-2" onClick={toggleMenu}>{t('categories')}</Link>
               <Link to="/about" className="text-gray-600 hover:text-blue-600 py-2" onClick={toggleMenu}>{t('about')}</Link>
+
+              {currentUser ? (
+                <>
+                  <div className="pt-2 border-t mt-2">
+                    <div className="font-medium text-gray-700 mb-2">{currentUser.name}</div>
+                    <Link to="/profile" className="text-gray-600 hover:text-blue-600 py-2 flex" onClick={toggleMenu}>
+                      <UserIcon className="h-5 w-5 mr-2" />
+                      {t('myProfile')}
+                    </Link>
+                    <Link to="/profile" className="text-gray-600 hover:text-blue-600 py-2 flex" onClick={toggleMenu}>
+                      <HeartIcon className="h-5 w-5 mr-2" />
+                      {t('myFavorites')}
+                    </Link>
+                    <button onClick={handleLogout} className="text-red-600 hover:text-red-800 py-2 flex w-full text-left">
+                      <ArrowRightOnRectangleIcon className="h-5 w-5 mr-2" />
+                      {t('logout')}
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <div className="pt-2 border-t mt-2">
+                  <div className="font-medium text-gray-600 mb-2">{t('account')}</div>
+                  <Link to="/login" className="text-gray-600 hover:text-blue-600 py-2" onClick={toggleMenu}>{t('login')}</Link>
+                  <Link to="/register" className="text-gray-600 hover:text-blue-600 py-2" onClick={toggleMenu}>{t('register')}</Link>
+                </div>
+              )}
 
               <div className="py-2 border-t mt-2">
                 <div className="font-medium text-gray-600 mb-2">Language / Ngôn ngữ</div>

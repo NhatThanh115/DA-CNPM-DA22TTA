@@ -5,6 +5,7 @@ import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
 import type { Book } from '../../types';
 import { useCart } from '../../contexts/CartContext';
 import { useLanguage } from '../../contexts/LanguageContext';
+import FavoriteButton from './FavoriteButton';
 
 interface BookDetailProps {
   book: Book;
@@ -87,12 +88,15 @@ export default function BookDetail({ book }: BookDetailProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Book Image */}
-        <div className="aspect-[3/4] bg-gray-100 rounded-lg overflow-hidden">
+        <div className="aspect-[3/4] bg-gray-100 rounded-lg overflow-hidden relative">
           <img
             src={book.imageUrl}
             alt={book.title}
             className="w-full h-full object-cover object-center"
           />
+          <div className="absolute top-4 right-4">
+            <FavoriteButton bookId={book.id} size="lg" />
+          </div>
         </div>
 
         {/* Book Details */}
@@ -126,6 +130,14 @@ export default function BookDetail({ book }: BookDetailProps) {
                 <span className="font-semibold">{t('published')}</span> {formatDate(book.publicationDate)}
               </div>
             </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-4 mb-6">
+            <FavoriteButton
+              bookId={book.id}
+              showText={true}
+              className="flex items-center"
+            />
           </div>
 
           {book.inStock && (

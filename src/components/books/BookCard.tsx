@@ -3,6 +3,7 @@ import { StarIcon, ShoppingCartIcon } from '@heroicons/react/24/solid';
 import type { Book } from '../../types';
 import { useCart } from '../../contexts/CartContext';
 import { useLanguage } from '../../contexts/LanguageContext';
+import FavoriteButton from './FavoriteButton';
 
 interface BookCardProps {
   book: Book;
@@ -45,13 +46,16 @@ export default function BookCard({ book }: BookCardProps) {
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg hover:-translate-y-1">
-      <Link to={`/books/${book.id}`}>
+      <Link to={`/books/${book.id}`} className="relative block">
         <div className="h-56 overflow-hidden">
           <img
             src={book.imageUrl}
             alt={book.title}
             className="w-full h-full object-cover"
           />
+        </div>
+        <div className="absolute top-2 right-2">
+          <FavoriteButton bookId={book.id} size="sm" />
         </div>
       </Link>
 
