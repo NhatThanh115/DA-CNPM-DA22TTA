@@ -44,3 +44,6 @@ npm run preview | Xem trước bản build
 
 npm run lint | Kiểm tra lỗi code (lint)
 
+docker-compose up --build | Khởi chạy trên Docker
+
+
