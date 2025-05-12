@@ -1,0 +1,13 @@
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80" # Map port 80 in the container to port 3000 on the host
+    volumes:
+      - .:/app # Mount the current directory for development (optional)
+      - /app/node_modules # Prevent overwriting node_modules
+    environment:
+      - NODE_ENV=production
