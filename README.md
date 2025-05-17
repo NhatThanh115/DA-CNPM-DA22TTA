@@ -28,10 +28,11 @@ cd bookstore-web
 npm install
 
 # Khởi chạy server phát triển
-npm run dev
-```
-Ứng dụng sẽ chạy tại: http://localhost:5173
+npm run dev | # Ứng dụng sẽ chạy tại: http://localhost:5173
 
+# Hoặc khởi chạy docker
+docker-compose up --build
+```
 ## 🧹 Các lệnh tiện ích
 
 Lệnh | Chức năng
@@ -44,6 +45,5 @@ npm run preview | Xem trước bản build
 
 npm run lint | Kiểm tra lỗi code (lint)
 
-docker-compose up --build | Khởi chạy trên Docker
 
 
