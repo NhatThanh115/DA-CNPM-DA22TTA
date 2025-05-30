@@ -1,13 +1,46 @@
+version: '3.8'
 
 services:
-  app:
+  backend:
     build:
-      context: .
+      context: ./bookstore-app-backend
       dockerfile: Dockerfile
     ports:
-      - "3000:80" # Map port 80 in the container to port 3000 on the host
-    volumes:
-      - .:/app # Mount the current directory for development (optional)
-      - /app/node_modules # Prevent overwriting node_modules
+      - "5001:5001" # Expose backend on host port 5001, mapping to container port 5001
     environment:
       - NODE_ENV=production
+      - PORT=5001
+      - MONGODB_URI=${MONGODB_URI} # These should be in a .env file at the root of your project
+      - JWT_SECRET=${JWT_SECRET}
+    volumes:
+      - ./bookstore-app-backend:/usr/src/app # Mount local backend code for development (optional)
+      - /usr/src/app/node_modules # Don't mount local node_modules over container's
+    restart: unless-stopped
+    depends_on:
+      - mongodb # If you were running MongoDB in Docker
+
+  frontend:
+    build:
+      context: ./bookstore-app
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: http://backend:5001/api # URL for backend service inside Docker network
+    ports:
+      - "3000:80" # Expose frontend Nginx on host port 3000, mapping to container port 80
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+# Note: MongoDB is not included in this Docker Compose setup as we are using MongoDB Atlas.
+# If you wanted to run MongoDB locally in Docker, you would add a 'mongodb' service here.
+# For example:
+# mongodb:
+#   image: mongo:latest
+#   ports:
+#     - "27017:27017"
+#   volumes:
+#     - mongo-data:/data/db
+#   restart: unless-stopped
+
+# volumes:
+#  mongo-data: # Defines a named volume for MongoDB data persistence

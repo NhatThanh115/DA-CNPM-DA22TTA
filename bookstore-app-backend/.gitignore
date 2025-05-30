@@ -1,0 +1,6 @@
+// Instructions: Create .gitignore file for backend
+
+node_modules
+dist
+.env
+*.log
