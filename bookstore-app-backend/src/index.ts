@@ -6,10 +6,9 @@ import cors from 'cors';
 import connectDB from './config/db';
 import authRoutes from './routes/authRoutes';
 import bookRoutes from './routes/bookRoutes';
-//import userRoutes from './routes/userRoutes';
+import userRoutes from './routes/userRoutes';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './config/swaggerConfig';
-
 
 dotenv.config();
 

@@ -156,7 +156,21 @@ export const books: Book[] = [
     featured: false,
     inStock: true,
     publicationDate: "1989-08-15",
+  },
+  {
+    id: "13",
+    title: "Hôm nay tôi thất tình",
+    author: "Hạ Vũ",
+    description: "Hôm nay tôi thất tình là một tuyển tập tản văn đầy cảm xúc của Hạ Vũ – cây bút quen thuộc với giới trẻ yêu thích sự nhẹ nhàng và sâu lắng. Cuốn sách là lời thủ thỉ chân thật về những vết thương tình cảm, nỗi cô đơn và quá trình chữa lành sau chia tay. Với lối viết giản dị, tinh tế, Hạ Vũ như người bạn tâm giao, đồng hành cùng độc giả vượt qua những ngày chông chênh nhất của tuổi trẻ. Đây là cuốn sách dành cho những ai đang yêu, đã từng yêu, và đang học cách buông bỏ để yêu lại chính mình.",
+    price: 4.99,
+    imageUrl: "https://cdn1.fahasa.com/media/catalog/product/9/7/9786045521465.jpg",
+    category: "non-fiction",
+    rating: 4.5,
+    featured: true,
+    inStock: true,
+    publicationDate: "2017-08-15",
   }
+
 ];
 
 export const getBookById = (id: string): Book | undefined => {

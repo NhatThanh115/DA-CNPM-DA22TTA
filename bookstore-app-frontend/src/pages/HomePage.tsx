@@ -6,6 +6,8 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { useEffect, useState } from 'react';
 import { fetchBooks } from '../services/bookService';
 import { Book } from '../types';
+import { books } from '../data/books';
+
 
 export default function HomePage() {
   const { t } = useLanguage();
@@ -48,6 +50,7 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16">
         <div className="container mx-auto px-4">
+        <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="max-w-2xl">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               {t('discoverBooks')}
@@ -62,6 +65,25 @@ export default function HomePage() {
               {t('browseCollection')}
               <ArrowRightIcon className="w-4 h-4 ml-2" />
             </Link>
+          </div>
+          <div className="md:w-1/2 flex justify-center">
+              <div className="relative w-64 h-80">
+                <div className="absolute top-0 left-0 w-64 h-80 transform -rotate-6 z-10">
+                  <img
+                    src={books[9].imageUrl}
+                    alt="Featured Book"
+                    className="w-full h-full object-cover rounded-lg shadow-lg"
+                  />
+                </div>
+                <div className="absolute top-5 right-0 left-10 w-64 h-80 transform rotate-6 z-0">
+                  <img
+                    src={books[5].imageUrl}
+                    alt="Featured Book"
+                    className="w-full h-full object-cover rounded-lg shadow-lg"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

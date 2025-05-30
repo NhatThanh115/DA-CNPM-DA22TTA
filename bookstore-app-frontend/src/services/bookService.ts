@@ -35,17 +35,3 @@ export const fetchCategories = async (): Promise<string[]> => {
   return response.data;
 };
 
-// CUD operations for books (if admin panel was being built)
-// export const createBook = async (bookData: Partial<BookType>): Promise<BookType> => {
-//   const response = await apiClient.post<BookType>('/books', bookData);
-//   return response.data;
-// };
-
-// export const updateBook = async (id: string, bookData: Partial<BookType>): Promise<BookType> => {
-//   const response = await apiClient.put<BookType>(`/books/${id}`, bookData);
-//   return response.data;
-// };
-
-// export const deleteBook = async (id: string): Promise<void> => {
-//   await apiClient.delete(`/books/${id}`);
-// };

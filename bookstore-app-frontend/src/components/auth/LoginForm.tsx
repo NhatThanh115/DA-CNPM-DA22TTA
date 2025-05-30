@@ -86,11 +86,6 @@ export default function LoginForm() {
           </Link>
         </div>
 
-        <div className="mt-4 text-center text-gray-600">
-          <p className="text-sm text-gray-500">{t('demoCredentials')}</p>
-          <p className="text-sm text-gray-500">Email: user1@example.com</p>
-          <p className="text-sm text-gray-500">{t('password')}: password123</p>
-        </div>
       </form>
     </div>
   );

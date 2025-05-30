@@ -21,7 +21,7 @@ export default function CategoriesPage() {
 
   // Static images for categories, keys should match backend category strings
   const categoryImages: Record<string, string> = {
-    fiction: "https://images.unsplash.com/photo-1495640388908-05fa85288e41?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60",
+    fiction: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZcO7nriZ1gHfLWTEOgN4AHuzifQpjxKIcYw&s",
     'non-fiction': "https://images.unsplash.com/photo-1513001900722-370f803f498d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60",
     'sci-fi': "https://images.unsplash.com/photo-1532012197267-da84d127e765?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60",
     mystery: "https://images.unsplash.com/photo-1587876931567-564ce588bfbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60",
