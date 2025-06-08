@@ -1,4 +1,3 @@
-version: '3.8'
 
 services:
   backend:
@@ -21,26 +20,23 @@ services:
 
   frontend:
     build:
-      context: ./bookstore-app
+      context: ./bookstore-app-frontend
       dockerfile: Dockerfile
       args:
-        VITE_API_BASE_URL: http://backend:5001/api # URL for backend service inside Docker network
+        VITE_API_BASE_URL: http://localhost:5001/api # URL for backend service inside Docker network
     ports:
       - "3000:80" # Expose frontend Nginx on host port 3000, mapping to container port 80
     depends_on:
       - backend
     restart: unless-stopped
 
-# Note: MongoDB is not included in this Docker Compose setup as we are using MongoDB Atlas.
-# If you wanted to run MongoDB locally in Docker, you would add a 'mongodb' service here.
-# For example:
-# mongodb:
-#   image: mongo:latest
-#   ports:
-#     - "27017:27017"
-#   volumes:
-#     - mongo-data:/data/db
-#   restart: unless-stopped
+  mongodb:
+   image: mongo:latest
+   ports:
+     - "27017:27017"
+   volumes:
+     - mongo-data:/data/db
+   restart: unless-stopped
 
-# volumes:
-#  mongo-data: # Defines a named volume for MongoDB data persistence
+volumes:
+    mongo-data: # Defines a named volume for MongoDB data persistence

@@ -1,6 +1,7 @@
 // Instructions: Integrate Swagger UI into the main backend server file
 
-import express, { Express, Request, Response } from 'express';
+import express from 'express';
+import type { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './config/db';
