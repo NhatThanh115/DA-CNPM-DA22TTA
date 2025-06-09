@@ -1,8 +1,8 @@
 // Instructions: Add JSDoc comments for Swagger to authRoutes.ts
 
 import express from 'express';
-import { registerUser, loginUser, getCurrentAuthenticatedUser } from '../controllers/authController';
-import authMiddleware from '../middleware/authMiddleware';
+import { registerUser, loginUser, getCurrentAuthenticatedUser } from '../controllers/authController.js';
+import authMiddleware from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 

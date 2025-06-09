@@ -25,7 +25,7 @@ services:
       args:
         VITE_API_BASE_URL: http://localhost:5001/api # URL for backend service inside Docker network
     ports:
-      - "3000:80" # Expose frontend Nginx on host port 3000, mapping to container port 80
+      - "3000:3000" # Expose frontend Nginx on host port 3000, mapping to container port 80
     depends_on:
       - backend
     restart: unless-stopped

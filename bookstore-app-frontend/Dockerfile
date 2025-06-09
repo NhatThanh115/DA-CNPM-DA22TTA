@@ -1,33 +1,35 @@
-# Stage 1: Build the React app
-FROM oven/bun:1 AS builder
+
+FROM node:20-alpine AS builder
+
 
 WORKDIR /app
 
-# Copy package files and install dependencies
-COPY package.json bun.lockb* ./
-RUN bun install --frozen-lockfile || bun install
+COPY package.json package-lock.json* ./
 
-# Copy the rest of the app's source code
+
+RUN npm ci --prefer-offline --no-audit --progress=false
+
 COPY . .
 
-# Argument for API base URL, can be overridden at build time
+
 ARG VITE_API_BASE_URL=/api
 ENV VITE_API_BASE_URL=${VITE_API_BASE_URL}
 
-# Build the app
-RUN bun run build
 
-# Stage 2: Serve the app with Nginx
-FROM nginx:alpine
+RUN npm run build -- --logLevel warn
 
-# Copy built assets from builder stage
-COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Copy custom Nginx configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+FROM node:20-alpine
 
-# Expose port 80
-EXPOSE 80
+WORKDIR /app
 
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
+
+RUN npm install -g serve --prefer-offline --no-audit --progress=false
+
+
+COPY --from=builder /app/dist .
+
+EXPOSE 3000
+
+
+CMD ["serve", "-s", ".", "-l", "3000"]

@@ -1,25 +1,36 @@
-# Stage 1: Use official Bun image
-FROM oven/bun:1 AS base
-WORKDIR /usr/src/app
+FROM node:20-alpine AS builder
 
-# Install dependencies first to leverage Docker cache
-COPY package.json bun.lockb* ./
-# Using --frozen-lockfile if bun.lockb exists, otherwise just install
-# This assumes bun.lockb is committed or will be generated correctly
-RUN bun install --frozen-lockfile || bun install
+WORKDIR /app
 
-# Copy the rest of the application code
+COPY package.json ./
+
+RUN npm install
+
 COPY . .
 
-# Application Environment Variables - these will be overridden by docker-compose or .env file locally
-ENV NODE_ENV=production
-# PORT is already set in your .env, but good to have a default here if needed
-# ENV PORT=5001
-# MONGODB_URI and JWT_SECRET will be injected by docker-compose
 
-# Expose the port the app runs on
-# This should match the PORT in your .env or the default if not set by docker-compose
-EXPOSE ${PORT:-5001}
+RUN npm run build || { echo "Build failed!"; exit 1; }
 
-# Command to run the application
-CMD ["bun", "run", "start"]
+
+RUN echo "--- Listing all files after build step ---" && ls -R
+
+
+RUN test -d /app/dist || { echo "Error: /app/dist directory not found!"; exit 1; }
+
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
+
+RUN npm install --omit=dev
+
+COPY --from=builder /app/dist ./dist
+
+
+RUN echo "--- Listing all files in final stage ---" && ls -R
+
+EXPOSE 5001
+
+CMD ["node", "dist/index.js"]

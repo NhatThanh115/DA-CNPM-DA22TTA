@@ -6,8 +6,8 @@ import {
   updateBook,
   deleteBook,
   getBookCategories
-} from '../controllers/bookController';
-import authMiddleware from '../middleware/authMiddleware';
+} from '../controllers/bookController.js';
+import authMiddleware from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 

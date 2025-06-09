@@ -4,12 +4,12 @@ import express from 'express';
 import type { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import connectDB from './config/db';
-import authRoutes from './routes/authRoutes';
-import bookRoutes from './routes/bookRoutes';
-import userRoutes from './routes/userRoutes';
+import connectDB from './config/db.js';
+import authRoutes from './routes/authRoutes.js';
+import bookRoutes from './routes/bookRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 import swaggerUi from 'swagger-ui-express';
-import swaggerSpec from './config/swaggerConfig';
+import swaggerSpec from './config/swaggerConfig.js';
 
 dotenv.config();
 

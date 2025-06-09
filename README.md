@@ -23,15 +23,17 @@
 git clone https://github.com/your-username/bookstore-web.git
 
 # Di chuyển vào thư mục dự án
-cd bookstore
+
+# Khởi chạy npm install để cài đặt các gói mở rộng cần thiết cho dự án
+
+## Cách để sử dụng Swagger
 
 # Cài đặt các gói phụ thuộc
-npm install | #Gồm có 2 gói front-end và back-end
-
-# Khởi chạy server phát triển/ khởi chạy swagger
+npm install 
+# Khởi chạy backend để sử dụng swagger
 npm run dev
 
-# Hoặc khởi chạy docker
+# Triển khai docker
 docker-compose up --build
 ```
 

@@ -1,7 +1,7 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import User from '../models/User';
-import { AuthRequest } from '../middleware/authMiddleware';
+import User from '../models/User.js';
+import type { AuthRequest } from '../middleware/authMiddleware.js';
 
 const generateToken = (userId: string) => {
   const jwtSecret = process.env.JWT_SECRET;

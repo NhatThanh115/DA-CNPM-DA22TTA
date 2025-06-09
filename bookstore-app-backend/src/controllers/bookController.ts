@@ -1,5 +1,7 @@
-import { Request, Response } from 'express';
-import Book, { IBook } from '../models/Book';
+import express from 'express';
+import type { Request, Response } from 'express';
+import Book from '../models/Book.js';
+import type { IBook } from '../models/Book.js';
 
 // @desc    Get all books with optional category filter and pagination
 // @route   GET /api/books

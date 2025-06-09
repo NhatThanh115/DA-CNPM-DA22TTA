@@ -1,7 +1,7 @@
-import { Response } from 'express';
-import User from '../models/User';
-import Book from '../models/Book';
-import { AuthRequest } from '../middleware/authMiddleware';
+import type { Response } from 'express';
+import User from '../models/User.js';
+import Book from '../models/Book.js';
+import type { AuthRequest } from '../middleware/authMiddleware.js';
 import mongoose from 'mongoose';
 
 // @desc    Get user profile
@@ -91,7 +91,7 @@ export const addFavoriteBook = async (req: AuthRequest, res: Response) => {
     return res.status(401).json({ message: 'User not authenticated' });
   }
 
-  if (!mongoose.Types.ObjectId.isValid(bookId)) {
+  if (!bookId || !mongoose.Types.ObjectId.isValid(bookId)) {
     return res.status(400).json({ message: 'Invalid book ID format' });
   }
 
@@ -106,11 +106,11 @@ export const addFavoriteBook = async (req: AuthRequest, res: Response) => {
       return res.status(404).json({ message: 'Book not found' });
     }
 
-    if (user.favoriteBooks.includes(book._id)) {
+    if (user.favoriteBooks.includes(new mongoose.Types.ObjectId(book._id as string))) {
       return res.status(400).json({ message: 'Book already in favorites', favorites: user.favoriteBooks });
     }
 
-    user.favoriteBooks.push(book._id);
+    user.favoriteBooks.push(book._id as mongoose.Types.ObjectId);
     await user.save();
     res.json(user.favoriteBooks);
   } catch (err: any) {
@@ -128,7 +128,7 @@ export const removeFavoriteBook = async (req: AuthRequest, res: Response) => {
     return res.status(401).json({ message: 'User not authenticated' });
   }
 
-  if (!mongoose.Types.ObjectId.isValid(bookId)) {
+  if (!bookId || !mongoose.Types.ObjectId.isValid(bookId)) {
     return res.status(400).json({ message: 'Invalid book ID format' });
   }
 

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import connectDB from './config/db';
-import Book from './models/Book';
+import connectDB from './config/db.js';
+import Book from './models/Book.js';
 // Using the same book data from the frontend for consistency
 const booksData = [
   {
@@ -168,17 +168,13 @@ const seedDB = async () => {
   await connectDB();
 
   try {
-    // Clear existing books
+
     await Book.deleteMany({});
     console.log('Old books removed.');
 
-    // Insert new books
-    // We need to map frontend id to MongoDB's _id if we want to keep them consistent,
-    // or let MongoDB generate new _ids. For simplicity, we'll let MongoDB generate them.
-    // If we needed to reference these specific IDs from the frontend's mock data later,
-    // we would need a more careful mapping strategy.
+   
     const booksToInsert = booksData.map(book => {
-      const { id, ...restOfBook } = book; // Exclude frontend id
+      const { id, ...restOfBook } = book; 
       return restOfBook;
     });
 

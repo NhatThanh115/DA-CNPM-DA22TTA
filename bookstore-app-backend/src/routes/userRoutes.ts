@@ -5,8 +5,8 @@ import {
   getFavoriteBooks,
   addFavoriteBook,
   removeFavoriteBook,
-} from '../controllers/userController';
-import authMiddleware from '../middleware/authMiddleware';
+} from '../controllers/userController.js';
+import authMiddleware from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
