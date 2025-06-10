@@ -1,5 +1,3 @@
-// Instructions: Refactor BooksPage to fetch books from the backend with pagination and category filter
-
 // src/pages/BooksPage.tsx
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -10,7 +8,7 @@ import { Book } from '../types';
 
 export default function BooksPage() {
   const [searchParams] = useSearchParams();
-  const categoryQuery = searchParams.get('category') || 'all'; // Category from URL query param
+  const categoryQuery = searchParams.get('category') || 'all'; 
   const { t } = useLanguage();
 
   const [books, setBooks] = useState<Book[]>([]);
@@ -27,13 +25,10 @@ export default function BooksPage() {
     const loadBooks = async () => {
       try {
         setLoading(true);
-        const params: any = { page: currentPage, limit: 12 }; // Example limit
+        const params: any = { page: currentPage, limit: 12 };
         if (categoryQuery && categoryQuery !== 'all') {
           params.category = categoryQuery;
         }
-        // Add sorting params if your BookList component passes them up or if static here
-        // params.sortBy = 'createdAt';
-        // params.order = 'desc';
 
         const response = await fetchBooks(params);
         setBooks(response.books);
@@ -51,7 +46,6 @@ export default function BooksPage() {
 
   const getPageTitle = (categoryKey: string): string => {
     if (categoryKey === 'all' || !categoryKey) return t('allBooks');
-    // Attempt to translate common category keys; otherwise, capitalize
     const knownCategories: Record<string, string> = {
         'fiction': t('fiction'),
         'non-fiction': t('nonFiction'),
@@ -67,7 +61,6 @@ export default function BooksPage() {
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
-    // Scroll to top or to the book list
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -88,8 +81,8 @@ export default function BooksPage() {
         <>
           <BookList
             books={books}
-            showFilters={true} // BookList filters are client-side based on `books` prop for now
-                               // To make them server-side, BookList would need to trigger API calls
+            showFilters={true} 
+                               
           />
           {totalPages > 1 && (
             <div className="mt-12 flex justify-center items-center space-x-2">
@@ -98,7 +91,7 @@ export default function BooksPage() {
                 disabled={currentPage <= 1}
                 className="px-4 py-2 border rounded-md bg-white hover:bg-gray-100 disabled:opacity-50"
               >
-                {t('previousPage')} {/* Add translation */}
+                {t('previousPage')} 
               </button>
               {[...Array(totalPages).keys()].map(num => (
                 <button
@@ -114,7 +107,7 @@ export default function BooksPage() {
                 disabled={currentPage >= totalPages}
                 className="px-4 py-2 border rounded-md bg-white hover:bg-gray-100 disabled:opacity-50"
               >
-                {t('nextPage')} {/* Add translation */}
+                {t('nextPage')} 
               </button>
             </div>
           )}

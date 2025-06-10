@@ -1,5 +1,3 @@
-// Instructions: Refactor FavoriteButton to use updated AuthContext and handle async operations
-
 // src/components/books/FavoriteButton.tsx
 import { useState, useEffect } from 'react';
 import { HeartIcon as HeartOutline } from '@heroicons/react/24/outline';
@@ -26,8 +24,7 @@ export default function FavoriteButton({
   const navigate = useNavigate();
 
   const [isFavorite, setIsFavorite] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // Local loading state for this button
-
+  const [isLoading, setIsLoading] = useState(false); 
   useEffect(() => {
     if (currentUser) {
       setIsFavorite(isBookInFavorites(bookId));
@@ -50,14 +47,11 @@ export default function FavoriteButton({
     try {
       if (isFavorite) {
         await removeFromFavorites(bookId);
-        // Local state will be updated by useEffect due to currentUser change
       } else {
         await addToFavorites(bookId);
-        // Local state will be updated by useEffect due to currentUser change
       }
     } catch (err) {
       console.error('Failed to toggle favorite from button:', err);
-      // Optionally show a toast or local error message here
     } finally {
       setIsLoading(false);
     }
@@ -71,7 +65,7 @@ export default function FavoriteButton({
           : 'text-gray-400 hover:text-red-500'
       } transition-colors relative ${className} disabled:opacity-50`}
       onClick={toggleFavorite}
-      disabled={isLoading || authLoading} // Disable if this button is loading OR auth context is loading
+      disabled={isLoading || authLoading} 
       aria-label={isFavorite ? t('removeFromFavorites') : t('addToFavorites')}
     >
       {isFavorite ? (

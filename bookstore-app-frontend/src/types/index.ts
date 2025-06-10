@@ -9,7 +9,7 @@ export interface Book {
   rating: number;
   featured: boolean;
   inStock: boolean;
-  publicationDate: string; // ISO date string
+  publicationDate: string; 
 }
 
 export interface CartItem {

@@ -45,13 +45,7 @@ export default function AboutPage() {
             We're continuously expanding our catalog and enhancing our platform to provide you with the best possible book shopping experience.
           </p>
 
-          <h2 className="text-2xl font-semibold mt-8 mb-4">{t('contactUs')}</h2>
-          <p>
-            Have questions or feedback? We'd love to hear from you! Contact our customer service team at
-            <a href="mailto:support@bookhaven.com" className="text-blue-600 hover:underline"> support@bookhaven.com</a> or call us at
-            <span className="font-medium"> (555) 123-4567</span>.
-          </p>
-
+          
           <p className="mt-8 italic">
             Thank you for choosing BookHaven as your trusted source for literary adventures. Happy reading!
           </p>

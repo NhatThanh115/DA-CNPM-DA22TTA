@@ -1,5 +1,3 @@
-// Instructions: Refactor BookDetailPage to fetch book details from the backend API
-
 // src/pages/BookDetailPage.tsx
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -20,7 +18,7 @@ export default function BookDetailPage() {
   useEffect(() => {
     const loadBook = async () => {
       if (!id) {
-        setError(t('invalidBookId')); // Add translation
+        setError(t('invalidBookId'));
         setLoading(false);
         return;
       }
@@ -33,9 +31,9 @@ export default function BookDetailPage() {
       } catch (err: any) {
         console.error(`Failed to fetch book with ID ${id}:`, err);
         if (err.response && err.response.status === 404) {
-            setError(t('bookNotFound')); // Add translation
+            setError(t('bookNotFound')); 
         } else {
-            setError(t('errorFetchingBook')); // Add translation
+            setError(t('errorFetchingBook')); 
         }
         navigate('/books', { replace: true, state: { error: t('bookNotFound') } });
       } finally {
@@ -54,12 +52,10 @@ export default function BookDetailPage() {
   }
 
   if (error || !book) {
-    // Error message can be shown on the BooksPage via navigate state or a global error component
-    // For simplicity here, we just navigate away. A better UX would show the error.
-    // The navigate in useEffect already handles redirecting if a book isn't found.
+  
     return (
         <div className="container mx-auto px-4 py-8 text-center">
-            <h1 className="text-2xl font-bold text-red-600">{error || t('bookCouldNotBeLoaded')}</h1> {/* Add translation */}
+            <h1 className="text-2xl font-bold text-red-600">{error || t('bookCouldNotBeLoaded')}</h1>
             <button onClick={() => navigate('/books')} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
                 {t('backToBooks')}
             </button>

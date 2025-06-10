@@ -13,10 +13,8 @@ export default function BookCard({ book }: BookCardProps) {
   const { addToCart } = useCart();
   const { t } = useLanguage();
 
-  // Format price to 2 decimal places
   const formattedPrice = book.price.toFixed(2);
 
-  // Generate stars based on rating
   const renderRatingStars = () => {
     const fullStars = Math.floor(book.rating);
     const hasHalfStar = book.rating % 1 >= 0.5;

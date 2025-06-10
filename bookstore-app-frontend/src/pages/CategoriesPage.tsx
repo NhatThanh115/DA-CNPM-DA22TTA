@@ -1,16 +1,14 @@
-// Instructions: Refactor CategoriesPage to fetch category list and counts from the backend API
-
 // src/pages/CategoriesPage.tsx
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
-import { fetchCategories, fetchBooks } from '../services/bookService'; // Assuming fetchBooks can count or we adjust
+import { fetchCategories, fetchBooks } from '../services/bookService'; 
 
 interface CategoryInfo {
   name: string;
   key: string;
   count: number;
-  image: string; // Keep static images for now
+  image: string; 
 }
 
 export default function CategoriesPage() {
@@ -19,7 +17,7 @@ export default function CategoriesPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Static images for categories, keys should match backend category strings
+
   const categoryImages: Record<string, string> = {
     fiction: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZcO7nriZ1gHfLWTEOgN4AHuzifQpjxKIcYw&s",
     'non-fiction': "https://images.unsplash.com/photo-1513001900722-370f803f498d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60",
@@ -38,14 +36,12 @@ export default function CategoriesPage() {
         setLoading(true);
         const backendCategories = await fetchCategories();
 
-        // Fetch counts for each category (can be performance intensive if many categories)
-        // A better backend would provide counts directly or have a summary endpoint.
         const categoryDataPromises = backendCategories.map(async (catKey) => {
           try {
-            // Fetching with limit 1 just to get totalBooks for the category
+  
             const countResponse = await fetchBooks({ category: catKey, limit: 1 });
             return {
-              name: t(catKey) || catKey.charAt(0).toUpperCase() + catKey.slice(1), // Translate or capitalize
+              name: t(catKey) || catKey.charAt(0).toUpperCase() + catKey.slice(1), 
               key: catKey,
               count: countResponse.totalBooks,
               image: categoryImages[catKey.toLowerCase()] || 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60' // Default image
@@ -55,7 +51,7 @@ export default function CategoriesPage() {
             return {
               name: t(catKey) || catKey.charAt(0).toUpperCase() + catKey.slice(1),
               key: catKey,
-              count: 0, // Default to 0 if count fetch fails
+              count: 0, 
               image: categoryImages[catKey.toLowerCase()] || 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60'
             };
           }
@@ -66,7 +62,7 @@ export default function CategoriesPage() {
         setError(null);
       } catch (err) {
         console.error('Failed to fetch categories:', err);
-        setError(t('errorFetchingCategories')); // Add translation
+        setError(t('errorFetchingCategories')); 
       } finally {
         setLoading(false);
       }
@@ -96,7 +92,7 @@ export default function CategoriesPage() {
       </div>
 
       {categoriesInfo.length === 0 && !loading && (
-        <div className="text-center text-gray-500">{t('noCategoriesFound')}</div> /* Add translation */
+        <div className="text-center text-gray-500">{t('noCategoriesFound')}</div>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

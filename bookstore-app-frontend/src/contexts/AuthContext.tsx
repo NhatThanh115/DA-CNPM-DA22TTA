@@ -9,7 +9,6 @@ import {
   updateUserProfile as updateUserProfileService,
   addToFavorites as addToFavoritesService,
   removeFromFavorites as removeFromFavoritesService,
-  // isBookInFavorites is now handled internally by checking currentUser.favoriteBooks
 } from '../services/authService';
 
 interface AuthContextType {
@@ -18,14 +17,14 @@ interface AuthContextType {
   error: string | null;
   login: (email: string, password: string) => Promise<void>;
   register: (email: string, password: string, name: string, username: string) => Promise<void>;
-  logout: () => Promise<void>; // Kept async for potential future backend logout calls
+  logout: () => Promise<void>; 
   updateProfile: (updates: Partial<Omit<User, 'id' | 'favoriteBooks' | 'email'>> & { email?: string }) => Promise<void>;
   addToFavorites: (bookId: string) => Promise<void>;
   removeFromFavorites: (bookId: string) => Promise<void>;
   isBookInFavorites: (bookId: string) => boolean;
-  favoriteBooks: string[]; // This will be derived from currentUser
+  favoriteBooks: string[]; 
   clearError: () => void;
-  fetchCurrentUser: () => Promise<void>; // Added to re-fetch user if needed
+  fetchCurrentUser: () => Promise<void>; 
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -34,7 +33,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  // favoriteBooks are now part of the currentUser object from the backend
   const favoriteBooks = currentUser?.favoriteBooks || [];
 
   const fetchCurrentUser = async () => {
@@ -44,7 +42,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setCurrentUser(user);
     } catch (err) {
       setCurrentUser(null);
-      // Don't set global error on initial load if user is simply not logged in
       console.info('Fetch current user: No user logged in or token invalid.');
     } finally {
       setLoading(false);
@@ -69,7 +66,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const e = err as Error;
       console.error('Error registering:', e);
       setError(e.message || 'Failed to register');
-      throw e; // Re-throw to be caught by form if needed
+      throw e;
     } finally {
       setLoading(false);
     }
@@ -85,17 +82,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const e = err as Error;
       console.error('Error logging in:', e);
       setError(e.message || 'Failed to login');
-      throw e; // Re-throw to be caught by form if needed
+      throw e;
     } finally {
       setLoading(false);
     }
   };
 
   const logout = async () => {
-    // Frontend logout is synchronous with current setup
     logoutUserService();
     setCurrentUser(null);
-    // No loading or error state needed for this simple logout
   };
 
   const updateProfile = async (updates: Partial<Omit<User, 'id' | 'favoriteBooks' | 'email'>> & { email?: string }) => {
@@ -169,7 +164,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     addToFavorites,
     removeFromFavorites,
     isBookInFavorites,
-    favoriteBooks, // Derived from currentUser
+    favoriteBooks,
     clearError,
     fetchCurrentUser
   };

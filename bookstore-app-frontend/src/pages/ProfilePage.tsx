@@ -3,9 +3,9 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
-import { books as allBooksData } from '../data/books'; // Keep for full book details
+import { books as allBooksData } from '../data/books';
 import BookCard from '../components/books/BookCard';
-import { User } from '../services/authService'; // Ensure this matches the one used in AuthContext
+import { User } from '../services/authService'; 
 
 export default function ProfilePage() {
   const {
@@ -15,8 +15,8 @@ export default function ProfilePage() {
     error: authError,
     clearError,
     updateProfile,
-    favoriteBooks: favoriteBookIds, // These are IDs from AuthContext
-    fetchCurrentUser, // To refresh user data after updates elsewhere
+    favoriteBooks: favoriteBookIds, 
+    fetchCurrentUser, 
   } = useAuth();
   const navigate = useNavigate();
   const { t } = useLanguage();
@@ -25,11 +25,11 @@ export default function ProfilePage() {
   const [username, setUsername] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [displayedFavoriteBooks, setDisplayedFavoriteBooks] = useState<typeof allBooksData>([]);
-  const [profileLoading, setProfileLoading] = useState(false); // Local loading for profile actions
+  const [profileLoading, setProfileLoading] = useState(false); 
 
   useEffect(() => {
     document.title = `${t('myProfile')} | BookHaven`;
-    // If not logged in and not in initial auth loading, redirect
+   
     if (!authLoading && !currentUser) {
       navigate('/login');
     }
@@ -39,13 +39,12 @@ export default function ProfilePage() {
     if (currentUser) {
       setName(currentUser.name);
       setUsername(currentUser.username);
-      // Map favoriteBookIds to full book objects
       const userFavorites = allBooksData.filter(book =>
-        favoriteBookIds.includes(book.id) // Assuming frontend book data uses 'id' that matches backend's favorite book ID
+        favoriteBookIds.includes(book.id) 
       );
       setDisplayedFavoriteBooks(userFavorites);
     } else {
-      // Clear fields if user logs out
+
       setName('');
       setUsername('');
       setDisplayedFavoriteBooks([]);
@@ -60,28 +59,22 @@ export default function ProfilePage() {
   const handleSaveProfile = async () => {
     if (!currentUser) return;
     setProfileLoading(true);
-    clearError(); // Clear previous errors
+    clearError(); 
     try {
-      // Only send fields if they are different or if email is allowed to be updated
       const updates: Partial<Omit<User, 'id' | 'favoriteBooks'>> = {};
       if (name !== currentUser.name) updates.name = name;
       if (username !== currentUser.username) updates.username = username;
-      // Add email update logic if your backend/UI supports it
-      // if (email !== currentUser.email) updates.email = email;
-
       if (Object.keys(updates).length > 0) {
         await updateProfile(updates);
       }
       setIsEditing(false);
     } catch (err: any) {
       console.error('Failed to update profile on page:', err);
-      // Error is already set in AuthContext, or you can set a local error
     } finally {
       setProfileLoading(false);
     }
   };
 
-  // Show main auth loading spinner if initial user fetch is happening
   if (authLoading && !currentUser) {
     return (
       <div className="container mx-auto px-4 py-8 flex justify-center items-center min-h-[calc(100vh-200px)]">
@@ -91,7 +84,7 @@ export default function ProfilePage() {
   }
 
   if (!currentUser) {
-    return null; // Redirected by useEffect
+    return null;
   }
 
   return (
@@ -100,7 +93,7 @@ export default function ProfilePage() {
         <div className="flex justify-between items-center mb-8">
             <h1 className="text-3xl font-bold">{t('myProfile')}</h1>
             <button
-                onClick={() => fetchCurrentUser()} // Button to manually refresh user data
+                onClick={() => fetchCurrentUser()} 
                 className="px-3 py-1.5 bg-gray-200 text-sm text-gray-700 rounded hover:bg-gray-300"
                 disabled={authLoading || profileLoading}
             >
@@ -136,7 +129,7 @@ export default function ProfilePage() {
                       setIsEditing(false);
                       setName(currentUser.name);
                       setUsername(currentUser.username);
-                      clearError(); // Clear errors when cancelling edit
+                      clearError(); 
                     }}
                     className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors"
                     disabled={profileLoading || authLoading}

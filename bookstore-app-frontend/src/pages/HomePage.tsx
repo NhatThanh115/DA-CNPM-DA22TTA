@@ -25,7 +25,7 @@ export default function HomePage() {
         setError(null);
       } catch (err) {
         console.error('Failed to fetch featured books:', err);
-        setError(t('errorFetchingBooks')); // Add this translation key
+        setError(t('errorFetchingBooks'));
       } finally {
         setLoading(false);
       }
@@ -33,7 +33,7 @@ export default function HomePage() {
     loadFeaturedBooks();
   }, [t]);
 
-  // Category card data - images are static for now
+
   const categories = [
     { titleKey: 'fiction', image: "https://images.unsplash.com/photo-1495640388908-05fa85288e41?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" },
     { titleKey: 'nonFiction', translationKey: 'non-fiction', image: "https://images.unsplash.com/photo-1513001900722-370f803f498d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" },
@@ -101,10 +101,10 @@ export default function HomePage() {
               <ArrowRightIcon className="w-4 h-4 ml-1" />
             </Link>
           </div>
-          {loading && <div className="text-center py-4">{t('loading')}...</div>} {/* Add t('loading') */}
+          {loading && <div className="text-center py-4">{t('loading')}...</div>} 
           {error && <div className="text-center py-4 text-red-500">{error}</div>}
           {!loading && !error && featuredBooks.length > 0 && <BookList books={featuredBooks} />}
-          {!loading && !error && featuredBooks.length === 0 && <div className="text-center py-4">{t('noFeaturedBooks')}</div>} {/* Add t('noFeaturedBooks') */}
+          {!loading && !error && featuredBooks.length === 0 && <div className="text-center py-4">{t('noFeaturedBooks')}</div>} 
         </div>
       </section>
 
@@ -154,7 +154,7 @@ export default function HomePage() {
 
 // Helper component for category cards
 function CategoryCard({ title, translationKey, image }: { title: string; translationKey?: string; image: string }) {
-  const categoryKey = translationKey || title.toLowerCase(); // This might need adjustment if title is already translated
+  const categoryKey = translationKey || title.toLowerCase(); 
   return (
     <Link to={`/categories/${categoryKey.replace(/\s+/g, '-').toLowerCase()}`} className="group">
       <div className="relative overflow-hidden rounded-lg shadow-md aspect-square">

@@ -1,5 +1,3 @@
-// Instructions: Refactor CategoryPage to fetch books by category from the backend API with pagination
-
 // src/pages/CategoryPage.tsx
 import { useEffect, useState } from 'react';
 import { useParams, Navigate, useLocation } from 'react-router-dom';
@@ -20,8 +18,6 @@ export default function CategoryPage() {
   const [totalPages, setTotalPages] = useState(1);
   const [categoryName, setCategoryName] = useState('');
 
-  // Validate category (simple check, can be enhanced)
-  // In a real app, you might fetch valid categories from backend or have a predefined list
   const isValidCategory = categoryParam && /^[a-zA-Z0-9-]+$/.test(categoryParam);
 
   useEffect(() => {
@@ -77,7 +73,7 @@ export default function CategoryPage() {
         <>
           <BookList
             books={books}
-            showFilters={false} // Filters might be less relevant on a specific category page or need server-side implementation
+            showFilters={false} 
           />
            {totalPages > 1 && (
             <div className="mt-12 flex justify-center items-center space-x-2">

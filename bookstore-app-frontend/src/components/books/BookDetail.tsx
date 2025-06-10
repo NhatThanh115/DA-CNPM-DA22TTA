@@ -31,7 +31,6 @@ export default function BookDetail({ book }: BookDetailProps) {
     addToCart(book, quantity);
   };
 
-  // Format date: "2019-02-05" -> "February 5, 2019"
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(t('language') === 'vi' ? 'vi-VN' : 'en-US', options);
