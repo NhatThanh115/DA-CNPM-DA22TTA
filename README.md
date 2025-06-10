@@ -21,7 +21,7 @@
 ## 📦 Cài đặt
 ```bash
 # Clone repository
-git clone https://github.com/your-username/bookstore-web.git
+git clone https://github.com/NhatThanh115/DA-CNPM-DA22TTA.git
 
 # Di chuyển vào thư mục dự án
 
@@ -29,13 +29,16 @@ git clone https://github.com/your-username/bookstore-web.git
 
 ## Cách để sử dụng Swagger
 
+#Di chuyển đến folder backend
+cd bookstore-app-backend
 # Cài đặt các gói phụ thuộc
 npm install 
 # Khởi chạy backend để sử dụng swagger
 npm run dev
 
-# Triển khai docker
+## Triển khai Docker, ta chạy lệnh
 docker-compose up --build
+#Lưu ý: nên chạy lệnh tại nơi chứa file docker-compose.yml
 ```
 
 
