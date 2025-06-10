@@ -16,6 +16,7 @@
 - **Backend**: NodeJS
 - **Giao diện**: Tailwind CSS
 - **Cơ sở dữ liệu**: MongoDB
+- **Khác**: JWT, Swagger, Docker 
 
 ## 📦 Cài đặt
 ```bash
